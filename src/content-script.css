@@ -1,0 +1,21 @@
+button {
+  position: absolute;
+  width: 40px;
+  height: 20px;
+  right: 12px;
+  display: flex;
+  justify-content: center; /* Центрирование по горизонтали */
+  align-items: center;
+  top: 6px;
+  padding: 0.5em;
+  background: #ffcc00;
+  color: #000;
+  border: none;
+  border-radius: 3px;
+  transition: background 0.15s ease-in-out;
+  font-family: monospace;
+}
+
+button:hover {
+  background: #e6b800;
+}

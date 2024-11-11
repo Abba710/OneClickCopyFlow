@@ -23,5 +23,16 @@
       "resources": ["content-script.css", "execute.js"],
       "matches": ["https://stackoverflow.com/*"]
     }
-  ]
+  ],
+  "commands": {
+    "copy-all": {
+      "suggested_key": {
+        "default": "Alt+Shift+C"
+      },
+      "description": "Copy all text"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
 }

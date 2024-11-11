@@ -1,32 +1,56 @@
-const preEls = document.querySelectorAll("pre");
+const preEls = document.querySelectorAll("pre"); // find all <pre> elements
 
 [...preEls].forEach((preEl) => {
-  const root = document.createElement("div");
+  // preEls converted to array and then the forEach method is used for iterate through each <pre> element
+  const root = document.createElement("div"); // for each <pre> elemet a new <div> element is created
 
   root.style.position = "relative";
-  const shadowRoot = root.attachShadow({ mode: "open" });
+  const shadowRoot = root.attachShadow({ mode: "open" }); // connect to <div> container "Shadow DOM" with "open" mode
 
-  const cssUrl = chrome.runtime.getURL("content-script.css");
+  const cssUrl = chrome.runtime.getURL("content-script.css"); // external styles are connected with api
 
-  shadowRoot.innerHTML = `<link rel="stylesheet" href="${cssUrl}"></link>`;
+  shadowRoot.innerHTML = `<link rel="stylesheet" href="${cssUrl}"></link>`; // add styles inside Shadow DOM, and didn't touch external elements
 
-  const button = document.createElement("button");
+  const button = document.createElement("button"); // add "Copy" button inside Shadow DOM
   button.innerText = "Copy";
   button.type = "button";
 
   shadowRoot.prepend(button);
 
-  const codeEl = preEl.querySelector("code");
+  const codeEl = preEl.querySelector("code"); // add container inside <pre>
   preEl.prepend(root);
 
   button.addEventListener("click", () => {
+    // add an event to copy text
     navigator.clipboard.writeText(codeEl.innerText).then(() => {
       notify();
     });
   });
 });
 
+//
+chrome.runtime.onMessage.addListener((req, info, cb) => {
+  if (req.action === "copy-all") {
+    const allCode = getAllCode();
+
+    navigator.clipboard.writeText(allCode).then(() => {
+      notify();
+      cb(allCode);
+    });
+    return true;
+  }
+});
+
+function getAllCode() {
+  return [...preEls]
+    .map((preEl) => {
+      return preEl.querySelector("code").innerText;
+    })
+    .join("");
+}
+
 function notify() {
+  // shows notification when copying code
   const scriptEl = document.createElement("script");
   scriptEl.src = chrome.runtime.getURL("execute.js");
 

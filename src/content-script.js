@@ -15,7 +15,13 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
   button.innerText = "Copy";
   button.type = "button";
 
+  const button2 = document.createElement("button"); // add "Comment" button inside Sadow DOM
+  button2.innerText = "Comment";
+  button2.type = "button2";
+  button2.className = "button2";
+
   shadowRoot.prepend(button);
+  shadowRoot.prepend(button2);
 
   const codeEl = preEl.querySelector("code"); // add container inside <pre>
   preEl.prepend(root);
@@ -24,12 +30,13 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
     // add an event to copy text
     navigator.clipboard.writeText(codeEl.innerText).then(() => {
       notify();
+      console.log(codeEl.textContent);
     });
   });
 });
 
-//
 chrome.runtime.onMessage.addListener((req, info, cb) => {
+  // function to copy all code
   if (req.action === "copy-all") {
     const allCode = getAllCode();
 
@@ -42,6 +49,7 @@ chrome.runtime.onMessage.addListener((req, info, cb) => {
 });
 
 function getAllCode() {
+  // this function iterates through all pre elements, gets the text and combines it into one
   return [...preEls]
     .map((preEl) => {
       return preEl.querySelector("code").innerText;

@@ -19,3 +19,25 @@ button {
 button:hover {
   background: #e6b800;
 }
+
+.button2 {
+  position: absolute;
+  width: 60px;
+  height: 20px;
+  right: 12px;
+  display: flex;
+  justify-content: center; /* Центрирование по горизонтали */
+  align-items: center;
+  top: 28px;
+  padding: 0.5em;
+  background: lightgreen;
+  color: #000;
+  border: none;
+  border-radius: 3px;
+  transition: background 0.15s ease-in-out;
+  font-family: monospace;
+}
+
+.button2:hover {
+  background: #e6b800;
+}

@@ -33,6 +33,13 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
       console.log(codeEl.textContent);
     });
   });
+
+  button2.addEventListener("click", () => {
+    // add an event to comment text
+    let comcode;
+    comcode = codeEl.outerHTML;
+    console.log(comcode);
+  });
 });
 
 chrome.runtime.onMessage.addListener((req, info, cb) => {

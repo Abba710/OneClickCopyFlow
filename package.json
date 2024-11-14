@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "@types/chrome": "^0.0.280"
   }
 }

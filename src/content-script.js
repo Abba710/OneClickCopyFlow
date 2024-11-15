@@ -17,7 +17,7 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
 
   const button2 = document.createElement("button"); // add "Comment" button inside Sadow DOM
   button2.innerText = "Comment";
-  button2.type = "button2";
+  button2.type = "button";
   button2.className = "button2";
 
   shadowRoot.prepend(button);
@@ -35,42 +35,40 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
   });
 
   button2.addEventListener("click", () => {
-    // add an event to comment text
-    let comcode;
-    comcode = codeEl.outerHTML;
-    console.log(comcode);
+    let comcode = codeEl.outerHTML;
+    chrome.runtime.sendMessage({ action: "sendHTMLToServer", html: comcode });
   });
-});
 
-chrome.runtime.onMessage.addListener((req, info, cb) => {
-  // function to copy all code
-  if (req.action === "copy-all") {
-    const allCode = getAllCode();
+  chrome.runtime.onMessage.addListener((req, info, cb) => {
+    // function to copy all code
+    if (req.action === "copy-all") {
+      const allCode = getAllCode();
 
-    navigator.clipboard.writeText(allCode).then(() => {
-      notify();
-      cb(allCode);
-    });
-    return true;
+      navigator.clipboard.writeText(allCode).then(() => {
+        notify();
+        cb(allCode);
+      });
+      return true;
+    }
+  });
+
+  function getAllCode() {
+    // this function iterates through all pre elements, gets the text and combines it into one
+    return [...preEls]
+      .map((preEl) => {
+        return preEl.querySelector("code").innerText;
+      })
+      .join("");
+  }
+
+  function notify() {
+    // shows notification when copying code
+    const scriptEl = document.createElement("script");
+    scriptEl.src = chrome.runtime.getURL("execute.js");
+
+    document.body.appendChild(scriptEl);
+    scriptEl.onload = () => {
+      scriptEl.remove();
+    };
   }
 });
-
-function getAllCode() {
-  // this function iterates through all pre elements, gets the text and combines it into one
-  return [...preEls]
-    .map((preEl) => {
-      return preEl.querySelector("code").innerText;
-    })
-    .join("");
-}
-
-function notify() {
-  // shows notification when copying code
-  const scriptEl = document.createElement("script");
-  scriptEl.src = chrome.runtime.getURL("execute.js");
-
-  document.body.appendChild(scriptEl);
-  scriptEl.onload = () => {
-    scriptEl.remove();
-  };
-}

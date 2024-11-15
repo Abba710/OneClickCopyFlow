@@ -17,7 +17,10 @@
       "js": ["content-script.js"]
     }
   ],
-  "host_permissions": ["https://stackoverflow.com/*"],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://stackoverflow.com/*"
+  ],
   "web_accessible_resources": [
     {
       "resources": ["content-script.css", "execute.js"],
@@ -34,5 +37,6 @@
   },
   "background": {
     "service_worker": "background.js"
-  }
+  },
+  "permissions": ["activeTab", "storage"]
 }

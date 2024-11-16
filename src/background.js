@@ -13,11 +13,13 @@ chrome.commands.onCommand.addListener((command) => {
 
 // comment button listener
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "sendHTMLToServer") {
-    const htmlCode = message.html;
-
+  if (message.action === "sendCodeToServer") {
+    const codeData = {
+      text: "",
+    };
+    codeData.text = message.text;
     // Вызываем функцию для отправки на сервер
-    sendHtmlToServer(htmlCode, sendResponse);
+    sendCodeToServer(codeData, sendResponse);
     return true; // Указываем, что ответ будет асинхронным
   }
 });
@@ -30,15 +32,15 @@ async function getCurrentTabId() {
   return tab.id;
 }
 
-async function sendHtmlToServer(html, sendResponse) {
+async function sendCodeToServer(code, sendResponse) {
   try {
     // Отправляем запрос на сервер
-    const response = await fetch("http://localhost:3000/api/gemini", {
+    const response = await fetch("http://localhost:3000/ai", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ html }), // Передаём HTML-код
+      body: JSON.stringify({ code }), // Передаём код
     });
 
     if (!response.ok) {
@@ -51,9 +53,6 @@ async function sendHtmlToServer(html, sendResponse) {
     const data = await response.json();
 
     console.log("Ответ от сервера:", data);
-
-    // Возвращаем результат в content-script
-    sendResponse({ processedHtml: data.processedHtml });
   } catch (error) {
     console.error("Ошибка при обработке запроса:", error.message);
     // Возвращаем ошибку в content-script

@@ -16,7 +16,7 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
   button.type = "button";
 
   const button2 = document.createElement("button"); // add "Comment" button inside Sadow DOM
-  button2.innerText = "Comment";
+  button2.innerText = "Explain";
   button2.type = "button";
   button2.className = "button2";
 
@@ -35,8 +35,8 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
   });
 
   button2.addEventListener("click", () => {
-    let comcode = codeEl.outerHTML;
-    chrome.runtime.sendMessage({ action: "sendHTMLToServer", html: comcode });
+    let comcode = codeEl.textContent;
+    chrome.runtime.sendMessage({ action: "sendCodeToServer", text: comcode });
   });
 
   chrome.runtime.onMessage.addListener((req, info, cb) => {

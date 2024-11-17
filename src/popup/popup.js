@@ -1,5 +1,3 @@
-import { marked } from "marked";
-
 document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById("textArea");
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -10,6 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function pasteText(text) {
-    title.textContent = marked(text);
+    title.textContent = text;
   }
 });

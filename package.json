@@ -1,7 +1,12 @@
 {
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
     "gpt4js": "^1.7.8",
-    "marked": "^15.0.0"
+    "marked": "^15.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
@@ -11,6 +16,7 @@
   "name": "oneclickcopyflow",
   "version": "1.0.0",
   "description": "OneClickCopyFlow: Chrome Extension for StackOverflow",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

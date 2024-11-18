@@ -1,10 +1,10 @@
 {
   "name": {
-    "message": "Copymaster",
+    "message": "OneClickCopyFlow",
     "description": "extension name"
   },
   "description": {
-    "message": "Copy faster from stackoverflow",
+    "message": "Copy faster from stackoverflow, explain code in one click",
     "description": "extension description"
   }
 }

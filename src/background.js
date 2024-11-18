@@ -51,6 +51,7 @@ async function sendCodeToServer(code, sendResponse) {
 
     // Парсим ответ в JSON
     const data = await response.json();
+
     chrome.runtime.sendMessage({ action: "sendCodeToPopup", code: data });
 
     console.log("Ответ от сервера:", data);

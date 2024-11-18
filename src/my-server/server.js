@@ -1,6 +1,7 @@
 import GPT4js from "gpt4js";
-import express from "express";
+import express, { json } from "express";
 import cors from "cors";
+import { marked } from "marked";
 
 const app = express();
 const PORT = 3000;
@@ -20,30 +21,36 @@ app.post("/ai", (req, res) => {
   const { code } = req.body;
 
   const text = code.text;
-
   const options = {
     provider: "Nextway",
     model: "gpt-4o-free",
     codeModelMode: true,
     temperature: 1,
   };
-  const messaages = [
+
+  const messages = [
     {
       role: "system",
       content:
-        "you are a programming assistant, your task is to write to me what the code I send you does",
+        "You are a programming assistant embedded in my extension. Your task is to explain the provided code in a short, simple, and precise way. " +
+        "Respond strictly to user requests without additional courtesy or unnecessary explanations. Do not repeat large sections of the code in your response. " +
+        "Focus only on the key functionality and important points of the code.\n" +
+        "Format your answers in Markdown when appropriate:\n" +
+        "1. Use single backticks (`) for inline code.\n" +
+        "2. For multi-line code, use triple backticks (```), and specify the language for syntax highlighting.\n",
     },
     {
       role: "user",
-      content: `Your task is to explain in detail and at the same time easy to read what is happening in the code; there should not be too much text, but the content should not suffer. ${text}`,
+      content: `Explain this code: ${text}`,
     },
   ];
 
   (async () => {
     const provider = GPT4js.createProvider(options.provider);
     try {
-      const text = await provider.chatCompletion(messaages, options);
-      res.json({ text });
+      const text = await provider.chatCompletion(messages, options);
+      const markedHTML = marked(text);
+      res.json({ html: markedHTML });
       console.log("ready");
     } catch (eror) {
       console.error("eror", eror);

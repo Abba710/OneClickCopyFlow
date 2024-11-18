@@ -17,15 +17,23 @@
     </header>
     <!--====== MAIN =======-->
     <main>
-      <div
-        class="bg-white w-[450px] h-[370px] relative left-[25px] top-[25px] overflow-hidden"
+      <!-- HTML with Tailwind classes -->
+      <button
+        class="inline-flex items-center justify-center left-[409px] top-[24px] h-[30px] w-[50px] px-4 bg-[#FCFCFD] text-[#36395A] font-['JetBrains Mono'] text-lg cursor-pointer select-none overflow-hidden relative focus:outline-none focus:ring-2 focus:ring-[#D6D6E7] focus:ring-inset shadow-[rgba(45,35,66,0.4)_0_2px_4px,rgba(45,35,66,0.3)_0_7px_13px_-3px,#D6D6E7_0_-3px_0_inset] transition-all duration-150 hover:shadow-[rgba(45,35,66,0.4)_0_4px_8px,rgba(45,35,66,0.3)_0_7px_13px_-3px,#D6D6E7_0_-3px_0_inset] hover:transform hover:translate-y-[-2px] active:shadow-[#D6D6E7_0_3px_7px_inset] active:transform active:translate-y-[2px]"
+        id="clear"
       >
-        <p class="text-sm font-mono text-left" id="textArea"></p>
-      </div>
+        Clear
+      </button>
+
+      <div
+        class="bg-white w-[450px] h-[370px] relative left-[25px] top-[25px] text-sm font-mono text-left overflow-y-scroll"
+        ,
+        id="textArea"
+      ></div>
     </main>
     <footer class="bg-[#9F9D9D] h-[20px] relative bottom-[-40px] text-center">
       <p class="text-sm font-mono">Post your ads here</p>
     </footer>
-    <script src="popup.js"></script>
+    <script type="module" src="popup.js"></script>
   </body>
 </html>

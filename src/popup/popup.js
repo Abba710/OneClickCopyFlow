@@ -1,13 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById("textArea");
+  let processedHTML = "";
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "sendCodeToPopup") {
-      const text = message.code.text;
-      pasteText(text);
+      processedHTML = message.code.html;
+      pasteHTML(processedHTML);
     }
   });
 
-  function pasteText(text) {
-    title.textContent = text;
+  chrome.browserAction.onClicked.addListener((tab) => {
+    pasteHTML(processedHTML);
+  });
+
+  function pasteHTML(processedHTML) {
+    title.innerHTML = processedHTML;
   }
 });
+// добавить слушатель когда опоапактивен

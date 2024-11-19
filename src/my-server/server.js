@@ -37,7 +37,8 @@ app.post("/ai", (req, res) => {
         "Focus only on the key functionality and important points of the code.\n" +
         "Format your answers in Markdown when appropriate:\n" +
         "1. Use single backticks (`) for inline code.\n" +
-        "2. For multi-line code, use triple backticks (```), and specify the language for syntax highlighting.\n",
+        "2. For multi-line code, use triple backticks (```), and specify the language for syntax highlighting.\n" +
+        "3. Add 1 indent at the end of the code and a long solid line '_' of 63 characters",
     },
     {
       role: "user",

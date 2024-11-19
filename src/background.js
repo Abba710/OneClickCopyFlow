@@ -15,11 +15,16 @@ chrome.commands.onCommand.addListener((command) => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "sendCodeToServer") {
     const codeData = {
-      text: "",
+      text: message.text,
     };
-    codeData.text = message.text;
     // Вызываем функцию для отправки на сервер
-    sendCodeToServer(codeData, sendResponse);
+    sendCodeToServer(codeData)
+      .then((response) => {
+        sendResponse({ status: "success", data: response });
+      })
+      .catch((error) => {
+        sendResponse({ status: "error", message: error.message });
+      });
     return true; // Указываем, что ответ будет асинхронным
   }
 });
@@ -49,10 +54,20 @@ async function sendCodeToServer(code, sendResponse) {
       );
     }
 
-    // Парсим ответ в JSON
     const data = await response.json();
 
-    chrome.runtime.sendMessage({ action: "sendCodeToPopup", code: data });
+    // Listens when the popup is active
+    chrome.runtime.onConnect.addListener((port) => {
+      if (port.name === "popup") {
+        if (data != undefined && data != null)
+          try {
+            chrome.runtime.sendMessage({
+              action: "sendCodeToPopup",
+              code: data,
+            });
+          } catch (error) {}
+      }
+    });
 
     console.log("Ответ от сервера:", data);
   } catch (error) {

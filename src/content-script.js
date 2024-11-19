@@ -28,24 +28,38 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
 
   button.addEventListener("click", () => {
     // add an event to copy text
+    const execute = "execute.js";
     navigator.clipboard.writeText(codeEl.innerText).then(() => {
-      notify();
+      notify(execute);
       console.log(codeEl.textContent);
     });
   });
 
   button2.addEventListener("click", () => {
+    const began = "began.js";
     let comcode = codeEl.textContent;
-    chrome.runtime.sendMessage({ action: "sendCodeToServer", text: comcode });
+    chrome.runtime.sendMessage(
+      { action: "sendCodeToServer", text: comcode },
+      (response) => {
+        if (response.status === "success") {
+          const completion = "completion.js";
+          notify(completion);
+        } else {
+          console.error("Error sending data to server: ", response.message);
+        }
+      }
+    );
+    notify(began);
   });
 
   chrome.runtime.onMessage.addListener((req, info, cb) => {
     // function to copy all code
+    const execute = "execute.js";
     if (req.action === "copy-all") {
       const allCode = getAllCode();
 
       navigator.clipboard.writeText(allCode).then(() => {
-        notify();
+        notify(execute);
         cb(allCode);
       });
       return true;
@@ -61,10 +75,10 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
       .join("");
   }
 
-  function notify() {
+  function notify(url) {
     // shows notification when copying code
     const scriptEl = document.createElement("script");
-    scriptEl.src = chrome.runtime.getURL("execute.js");
+    scriptEl.src = chrome.runtime.getURL(url);
 
     document.body.appendChild(scriptEl);
     scriptEl.onload = () => {

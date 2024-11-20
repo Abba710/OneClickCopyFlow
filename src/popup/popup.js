@@ -3,6 +3,7 @@ let port = chrome.runtime.connect({ name: "popup" });
 document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById("textArea");
   const clear = document.getElementById("clear");
+  const copy = document.getElementById("copy");
   const STORAGE_SELECTOR = ".storage[id]";
   const observer = new MutationObserver(() => {
     saveOnChange(title);
@@ -10,9 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const config = { childList: true, subtree: true };
 
-  observer.observe(title, config);
+  observer.observe(title, config); // Monitors all changes and saves them
 
   let processedHTML = "";
+  let data = {};
+
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "sendCodeToPopup") {
       processedHTML = message.code.html;
@@ -22,13 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // autosave logic
   function saveOnChange(el) {
+    // Autosave function for changes in HTML code
     if (el && el.closest(STORAGE_SELECTOR)) {
       doSave();
     }
   }
 
   function collectData() {
-    const data = {};
     for (const el of document.querySelectorAll(STORAGE_SELECTOR))
       if (el.id === "textArea") {
         data[el.id] = el.innerHTML;
@@ -39,11 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function doSave() {
-    chrome.storage.sync.set(collectData());
+    chrome.storage.local.set(collectData());
   }
 
   function loadFromStorage() {
-    chrome.storage.sync.get((data) => {
+    chrome.storage.local.get((data) => {
       if (data.autoSave) data = data.autoSave;
       for (const [id, value] of Object.entries(data)) {
         const el = document.getElementById(id);
@@ -58,20 +61,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  loadFromStorage();
-
   function pasteHTML(processedHTML) {
-    if (title.innerHTML == "") {
-      title.innerHTML = processedHTML;
-    } else {
-      title.innerHTML += processedHTML;
-    }
-    // Обновить HTML-контент страницы
-    saveOnChange(title);
+    title.innerHTML += processedHTML;
   }
 
   clear.addEventListener("click", () => {
     title.innerHTML = "";
-    saveOnChange(title);
+    chrome.storage.local.clear(() => {
+      if (chrome.runtime.lastError) {
+        console.log("Error when clearing sync storage:");
+      } else {
+        console.log("Sync storage succesfully cleared");
+      }
+    });
   });
+
+  copy.addEventListener("click", () => {
+    navigator.clipboard.writeText(title.innerText).then(() => {
+      copy.innerText = "Copied";
+      setTimeout(() => {
+        copy.innerText = "Copy";
+      }, 3000);
+    });
+  });
+
+  loadFromStorage();
 });

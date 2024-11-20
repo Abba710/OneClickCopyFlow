@@ -33,9 +33,9 @@
     {
       "resources": [
         "content-script.css",
-        "execute.js",
-        "completion.js",
-        "began.js"
+        "notification/execute.js",
+        "notification/completion.js",
+        "notification/began.js"
       ],
       "matches": ["https://stackoverflow.com/*"]
     }

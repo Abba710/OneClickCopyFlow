@@ -20,15 +20,16 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
   button2.type = "button";
   button2.className = "button2";
 
+  // add a buttons to the beginning of the shadow DOM element
   shadowRoot.prepend(button);
   shadowRoot.prepend(button2);
 
   const codeEl = preEl.querySelector("code"); // add container inside <pre>
-  preEl.prepend(root);
+  preEl.prepend(root); // add a root root inside preEl
 
   button.addEventListener("click", () => {
     // add an event to copy text
-    const execute = "execute.js";
+    const execute = "notification/execute.js";
     navigator.clipboard.writeText(codeEl.innerText).then(() => {
       notify(execute);
       console.log(codeEl.textContent);
@@ -36,14 +37,21 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
   });
 
   button2.addEventListener("click", () => {
-    const began = "began.js";
+    button2.style.backgroundColor = "#444444";
+    button2.innerText = "In process";
+    button2.disabled = true;
+    const began = "notification/began.js";
     let comcode = codeEl.textContent;
     chrome.runtime.sendMessage(
       { action: "sendCodeToServer", text: comcode },
       (response) => {
         if (response.status === "success") {
-          const completion = "completion.js";
+          const completion = "notification/completion.js";
           notify(completion);
+          button2.innerText = "Explained!";
+          button2.disabled = false;
+          button2.style.backgroundColor = "#00bb00";
+          setTimeout();
         } else {
           console.error("Error sending data to server: ", response.message);
         }
@@ -54,7 +62,7 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
 
   chrome.runtime.onMessage.addListener((req, info, cb) => {
     // function to copy all code
-    const execute = "execute.js";
+    const execute = "notification/execute.js";
     if (req.action === "copy-all") {
       const allCode = getAllCode();
 

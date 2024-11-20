@@ -34,15 +34,13 @@ app.post("/ai", (req, res) => {
       content:
         "You are a programming assistant embedded in my extension. Your task is to explain the provided code in a short, simple, and precise way. " +
         "Respond strictly to user requests without additional courtesy or unnecessary explanations. Do not repeat large sections of the code in your response. " +
-        "Focus only on the key functionality and important points of the code.\n" +
-        "Format your answers in Markdown when appropriate:\n" +
-        "1. Use single backticks (`) for inline code.\n" +
-        "2. For multi-line code, use triple backticks (```), and specify the language for syntax highlighting.\n" +
-        "3. Add 1 indent at the end of the code and a long solid line '_' of 63 characters",
+        "Focus only on the key functionality and important points of the code.  " +
+        "add a 63 simbols '______________' line at the end of every your answers, and after the line 1 empty line" +
+        "do not write anything unnecessary other than explanations for the code",
     },
     {
       role: "user",
-      content: `Explain this code: ${text}`,
+      content: `In each of your answers, strictly follow the instructions, your task is to explain the code and nothing more!: ${text}`,
     },
   ];
 

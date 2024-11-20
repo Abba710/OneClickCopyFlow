@@ -6,34 +6,46 @@
     <title>OneClickCopyFlow</title>
     <link href="dist/output.css" rel="stylesheet" />
   </head>
-  <body class="w-[500px] h-[450px] bg-[#D9D9D9]">
+  <body class="w-[500px] h-[450px] bg-[#212121] text-white font-mono">
     <!--====== HEADER =======-->
-    <header>
-      <div
-        class="bg-[#9F9D9D] selection:rw-[100%] h-[31px] text-center text-xl font-mono"
-      >
-        <h2>OneClickCopyFlow</h2>
-      </div>
+    <header class="bg-[#171717] text-center text-xl p-4 shadow-md">
+      <h2>OneClickCopyFlow</h2>
     </header>
+
     <!--====== MAIN =======-->
-    <main>
-      <!-- HTML with Tailwind classes -->
+    <main class="p-4">
+      <!-- Кнопка -->
       <button
-        class="inline-flex items-center justify-center left-[409px] top-[24px] h-[30px] w-[50px] px-4 bg-[#FCFCFD] text-[#36395A] font-['JetBrains Mono'] text-lg cursor-pointer select-none overflow-hidden relative focus:outline-none focus:ring-2 focus:ring-[#D6D6E7] focus:ring-inset shadow-[rgba(45,35,66,0.4)_0_2px_4px,rgba(45,35,66,0.3)_0_7px_13px_-3px,#D6D6E7_0_-3px_0_inset] transition-all duration-150 hover:shadow-[rgba(45,35,66,0.4)_0_4px_8px,rgba(45,35,66,0.3)_0_7px_13px_-3px,#D6D6E7_0_-3px_0_inset] hover:transform hover:translate-y-[-2px] active:shadow-[#D6D6E7_0_3px_7px_inset] active:transform active:translate-y-[2px]"
+        class="inline-flex items-center justify-center h-[35px] px-4 bg-[#444444] text-white text-xl cursor-pointer select-none relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#1A1A1A] focus:ring-inset shadow-[rgba(45,35,66,0.4)_0_2px_4px,rgba(45,35,66,0.3)_0_7px_13px_-3px,#1A1A1A_0_-3px_0_inset] transition-all duration-150 hover:bg-[#555555] hover:shadow-[rgba(45,35,66,0.4)_0_4px_8px,rgba(45,35,66,0.3)_0_7px_13px_-3px,#1A1A1A_0_-3px_0_inset] hover:translate-y-[-2px] active:shadow-[#1A1A1A_0_3px_7px_inset] active:translate-y-[2px] rounded-lg"
+        id="copy"
+      >
+        Copy
+      </button>
+      <button
+        class="inline-flex items-center justify-center h-[35px] px-4 bg-[#444444] text-white text-xl cursor-pointer select-none relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#1A1A1A] focus:ring-inset shadow-[rgba(45,35,66,0.4)_0_2px_4px,rgba(45,35,66,0.3)_0_7px_13px_-3px,#1A1A1A_0_-3px_0_inset] transition-all duration-150 hover:bg-[#555555] hover:shadow-[rgba(45,35,66,0.4)_0_4px_8px,rgba(45,35,66,0.3)_0_7px_13px_-3px,#1A1A1A_0_-3px_0_inset] hover:translate-y-[-2px] active:shadow-[#1A1A1A_0_3px_7px_inset] active:translate-y-[2px] rounded-lg"
         id="clear"
       >
         Clear
       </button>
 
+      <!-- Элементы внутри popup -->
       <div
-        class="bg-white w-[450px] h-[370px] relative storage left-[25px] top-[25px] text-sm font-mono text-left overflow-y-scroll"
-        ,
-        id="textArea"
-      ></div>
+        class="w-[470px] h-[390px] bg-[#333333] rounded-lg shadow-lg p-4 mt-4 scrollbar overflow-y-auto"
+      >
+        <div
+          class="prose prose-invert storage prose-p:mb-2 prose-p:mt-1 prose-a:text-blue-400 prose-a:hover:text-blue-500 prose-blockquote:border-l-4 prose-blockquote:pl-4 prose-code:bg-[#444444] prose-code:text-white prose-pre:bg-[#2C2C2C] prose-pre:p-4 prose-table:table-auto prose-table:my-4 prose-th:bg-[#555555] prose-th:text-white prose-td:border-b prose-td:border-[#444444] prose-img:rounded-md prose-img:max-w-full prose-hr:border-t-2 prose-hr:border-[#444444] prose-ul:pl-6 prose-li:mb-2 prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-h4:text-base prose-h1:font-bold prose-h2:font-bold prose-h3:font-semibold prose-h4:font-semibold prose-h1:mt-2 prose-h2:mt-2 prose-h3:mt-2 prose-h4:mt-2"
+          id="textArea"
+        >
+          <!-- Содержимое -->
+        </div>
+      </div>
     </main>
-    <footer class="bg-[#9F9D9D] h-[20px] relative bottom-[-40px] text-center">
-      <p class="text-sm font-mono">Post your ads here</p>
+
+    <!--====== FOOTER =======-->
+    <footer class="bg-[#171717] text-white text-center text-sm py-2 mt-4">
+      <p>Post your ads here</p>
     </footer>
+
     <script type="module" src="popup.js"></script>
   </body>
 </html>

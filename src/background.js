@@ -54,17 +54,19 @@ async function sendCodeToServer(code, sendResponse) {
       );
     }
 
-    const data = await response.json();
+    let data = await response.json();
 
     // Listens when the popup is active
     chrome.runtime.onConnect.addListener((port) => {
       if (port.name === "popup") {
-        if (data != undefined && data != null)
+        if (data != undefined && data != null && data !== "")
           try {
             chrome.runtime.sendMessage({
               action: "sendCodeToPopup",
               code: data,
             });
+            data = "";
+            console.log("sended from background");
           } catch (error) {}
       }
     });

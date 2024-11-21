@@ -5,11 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OneClickCopyFlow</title>
     <link href="dist/output.css" rel="stylesheet" />
+    <link href="custom.css" rel="stylesheet" />
   </head>
   <body class="w-[500px] h-[450px] bg-[#212121] text-white font-mono">
     <!--====== HEADER =======-->
-    <header class="bg-[#171717] text-center text-xl p-4 shadow-md">
-      <h2>OneClickCopyFlow</h2>
+    <header class="flex justify-center items-center">
+      <div
+        class="bg-[#171717] w-[100%] h-[40px] flex justify-center items-center text-center text-xl shadow-md"
+      >
+        <a
+          class="absolute"
+          href="https://github.com/Abba710/OneClickCopyFlow"
+          target="_blank"
+          title="OCCF Github"
+          ><h2>OneClickCopyFlow</h2></a
+        >
+        <a
+          class="relative right-[-220px] w-[27px] h-[27px] transition-transform duration-300 ease-in-out hover:shake"
+          href="https://buymeacoffee.com/abba710"
+          target="_blank"
+          title="Buy me a coffee"
+        >
+          <img src="../icons/web/icons8-coffee-32.png" alt="Buy me a coffee" />
+        </a>
+      </div>
     </header>
 
     <!--====== MAIN =======-->
@@ -43,7 +62,9 @@
 
     <!--====== FOOTER =======-->
     <footer class="bg-[#171717] text-white text-center text-sm py-2 mt-4">
-      <p>Post your ads here</p>
+      <a href="https://t.me/Saifer710" title="Contact me" target="_blank"
+        ><p>Post your ads here</p></a
+      >
     </footer>
 
     <script type="module" src="popup.js"></script>

@@ -68,7 +68,8 @@ app.post("/ai", async (req, res) => {
 
     // Sending a request to GPT with the messages and options
     const responseText = await provider.chatCompletion(messages, options);
-    const markedHTML = marked(responseText); // Converting the response from Markdown to HTML.
+
+    const markedHTML = marked(responseText || "Try again"); // Converting the response from Markdown to HTML.
 
     // Caching the response in Redis with a 1-hour expiration time
     await redis.set(cacheKey, markedHTML, "EX", 60 * 60);

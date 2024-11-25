@@ -1,3 +1,4 @@
+/* "Copy" button styles */
 button {
   display: inline-flex;
   align-items: center;
@@ -38,6 +39,7 @@ button:active {
   transform: translateY(2px);
 }
 
+/* "Comment" button styles */
 .button2 {
   display: inline-flex;
   align-items: center;

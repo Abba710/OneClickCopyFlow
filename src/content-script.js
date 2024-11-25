@@ -1,99 +1,98 @@
-const preEls = document.querySelectorAll("pre"); // find all <pre> elements
+const preEls = document.querySelectorAll("pre"); // Find all <pre> elements in the document
 
 [...preEls].forEach((preEl) => {
-  // preEls converted to array and then the forEach method is used for iterate through each <pre> element
-  const root = document.createElement("div"); // for each <pre> elemet a new <div> element is created
+  // Convert NodeList to an array and iterate over each <pre> element using forEach
+  const root = document.createElement("div"); // Create a new <div> element for each <pre> element
 
-  root.style.position = "relative";
-  const shadowRoot = root.attachShadow({ mode: "open" }); // connect to <div> container "Shadow DOM" with "open" mode
+  root.style.position = "relative"; // Set the position style for the <div>
+  const shadowRoot = root.attachShadow({ mode: "open" }); // Attach a Shadow DOM to the <div> with open mode
 
-  const cssUrl = chrome.runtime.getURL("content-script.css"); // external styles are connected with api
+  const cssUrl = chrome.runtime.getURL("content-script.css"); // Get the URL for the external stylesheet
 
-  shadowRoot.innerHTML = `<link rel="stylesheet" href="${cssUrl}"></link>`; // add styles inside Shadow DOM, and didn't touch external elements
+  shadowRoot.innerHTML = `<link rel="stylesheet" href="${cssUrl}"></link>`; // Apply the stylesheet inside the Shadow DOM
 
-  const button = document.createElement("button"); // add "Copy" button inside Shadow DOM
-  button.innerText = "Copy";
-  button.type = "button";
+  const button = document.createElement("button"); // Create a "Copy" button inside the Shadow DOM
+  button.innerText = "Copy"; // Set the text for the "Copy" button
+  button.type = "button"; // Set the button type
 
-  const button2 = document.createElement("button"); // add "Comment" button inside Sadow DOM
-  button2.innerText = "Explain";
-  button2.type = "button";
-  button2.className = "button2";
+  const button2 = document.createElement("button"); // Create an "Explain" button inside the Shadow DOM
+  button2.innerText = "Explain"; // Set the text for the "Explain" button
+  button2.type = "button"; // Set the button type
+  button2.className = "button2"; // Add a class to the "Explain" button for styling
 
-  // add a buttons to the beginning of the shadow DOM element
+  // Add both buttons at the beginning of the Shadow DOM
   shadowRoot.prepend(button);
   shadowRoot.prepend(button2);
 
-  const codeEl = preEl.querySelector("code"); // add container inside <pre>
-  preEl.prepend(root); // add a root root inside preEl
+  const codeEl = preEl.querySelector("code"); // Find the <code> element inside the current <pre> element
+  preEl.prepend(root); // Add the created <div> (root) inside the current <pre> element
 
+  // "Copy" button click event listener
   button.addEventListener("click", () => {
-    // add an event to copy text
-    const execute = "notification/execute.js";
+    const execute = "notification/execute.js"; // Define the notification script to show after copying
     navigator.clipboard.writeText(codeEl.innerText).then(() => {
-      notify(execute);
-      console.log(codeEl.textContent);
+      notify(execute); // Show the notification after text is copied
+      console.log(codeEl.textContent); // Log the text content of the code element
     });
   });
 
+  // "Explain" button click event listener
   button2.addEventListener("click", () => {
-    // add an event to "Explain code"
-    button2.style.backgroundColor = "#444444";
-    button2.innerText = "In process";
-    button2.disabled = true;
-    const began = "notification/began.js";
-    let comcode = codeEl.textContent;
+    button2.style.backgroundColor = "#444444"; // Change the button color to indicate processing
+    button2.innerText = "In process"; // Update the button text to show it's in progress
+    button2.disabled = true; // Disable the button to prevent further clicks
+    const began = "notification/began.js"; // Define the notification script for when the process starts
+    let comcode = codeEl.textContent; // Get the code text to be sent for explanation
     chrome.runtime.sendMessage(
-      // send a message with an action to the background
-      { action: "sendCodeToServer", text: comcode },
+      { action: "sendCodeToServer", text: comcode }, // Send the code to the background to be processed
       (response) => {
         if (response.status === "success") {
-          // receive a response, if the response is successful, we display a notification
+          // If the server responds successfully, show a completion notification
           const completion = "notification/completion.js";
-          notify(completion);
-          button2.innerText = "Explained!";
-          button2.disabled = false;
-          button2.style.backgroundColor = "#00bb00";
-          setTimeout();
+          notify(completion); // Show the completion notification
+          button2.innerText = "Explained!"; // Update the button text to show completion
+          button2.disabled = false; // Re-enable the button
+          button2.style.backgroundColor = "#00bb00"; // Change button color to indicate success
+          setTimeout(); // Potentially handle timing or UI update here
         } else {
-          console.error("Error sending data to server: ", response.message);
+          console.error("Error sending data to server: ", response.message); // Log any errors
         }
       }
     );
-    notify(began);
+    notify(began); // Show the "process began" notification
   });
 
   chrome.runtime.onMessage.addListener((req, info, cb) => {
-    // function to copy all code on active tab
-    const execute = "notification/execute.js";
+    // Listener for messages, specifically the "copy-all" action
+    const execute = "notification/execute.js"; // Define the notification script to show after copying all code
     if (req.action === "copy-all") {
-      const allCode = getAllCode();
+      const allCode = getAllCode(); // Get all code content
 
       navigator.clipboard.writeText(allCode).then(() => {
-        notify(execute);
-        cb(allCode);
+        notify(execute); // Show the notification after copying all code
+        cb(allCode); // Send the combined code back as the response
       });
-      return true;
+      return true; // Indicate the response is asynchronous
     }
   });
 
   function getAllCode() {
-    // this function iterates through all pre elements, gets the text and combines it into one
+    // Function to get all code from <pre> elements, combine them into a single string
     return [...preEls]
       .map((preEl) => {
-        return preEl.querySelector("code").innerText;
+        return preEl.querySelector("code").innerText; // Extract the text content from each <code> inside <pre>
       })
-      .join("");
+      .join(""); // Combine all code snippets into one string
   }
 
   function notify(url) {
-    // shows notification when copying code
+    // Function to show notifications (by injecting script)
     const scriptEl = document.createElement("script");
-    scriptEl.src = chrome.runtime.getURL(url);
+    scriptEl.src = chrome.runtime.getURL(url); // Get the URL of the notification script
 
-    document.body.appendChild(scriptEl);
+    document.body.appendChild(scriptEl); // Append the script to the body
     scriptEl.onload = () => {
-      scriptEl.remove();
+      scriptEl.remove(); // Remove the script after it is loaded and executed
     };
   }
 });

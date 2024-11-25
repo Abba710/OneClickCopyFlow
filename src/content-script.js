@@ -37,15 +37,18 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
   });
 
   button2.addEventListener("click", () => {
+    // add an event to "Explain code"
     button2.style.backgroundColor = "#444444";
     button2.innerText = "In process";
     button2.disabled = true;
     const began = "notification/began.js";
     let comcode = codeEl.textContent;
     chrome.runtime.sendMessage(
+      // send a message with an action to the background
       { action: "sendCodeToServer", text: comcode },
       (response) => {
         if (response.status === "success") {
+          // receive a response, if the response is successful, we display a notification
           const completion = "notification/completion.js";
           notify(completion);
           button2.innerText = "Explained!";
@@ -61,7 +64,7 @@ const preEls = document.querySelectorAll("pre"); // find all <pre> elements
   });
 
   chrome.runtime.onMessage.addListener((req, info, cb) => {
-    // function to copy all code
+    // function to copy all code on active tab
     const execute = "notification/execute.js";
     if (req.action === "copy-all") {
       const allCode = getAllCode();

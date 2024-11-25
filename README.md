@@ -44,7 +44,7 @@ Before using the extension, make sure to start both the **Redis** server and you
 
    - Launch Redis by running the following command:
      ```bash
-     redis-server
+     .\redis-server.exe
      ```
 
 3. **Start the Explanation Server**:

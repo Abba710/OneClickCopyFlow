@@ -7,6 +7,12 @@ This browser extension allows users to interact with code on the website https:/
 - Copy all code on the page with a single keyboard shortcut ("alt+shift+c").
 - Notifications to inform users about the progress of processes (e.g., code copying or processing).
 
+## Acknowledgments
+
+This project was inspired by a YouTube video explaining [brief description of the video]. A big thanks to the creators for their valuable insights!
+
+You can find the video here: [Video URL](https://www.youtube.com/watch?v=OWdHDGgt0zo)
+
 ## Features
 
 - **Copy code**: A "Copy" button is added to each code block, allowing users to easily copy code to the clipboard.

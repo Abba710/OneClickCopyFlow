@@ -13,6 +13,17 @@ This project was inspired by a YouTube video explaining [brief description of th
 
 You can find the video here: [Video URL](https://www.youtube.com/watch?v=OWdHDGgt0zo)
 
+Additionally, I would like to acknowledge the following libraries and authors for their contributions:
+
+- **GPT4js**: A library for interacting with the GPT-4 model, licensed under the **GNU General Public License**. [GitHub - GPT4js](https://github.com/zachey01/gpt4free.js/)
+- **express**: A web framework for Node.js, licensed under the **MIT License**. [GitHub - Express](https://github.com/expressjs/express)
+- **cors**: A package for enabling Cross-Origin Resource Sharing, licensed under the **MIT License**. [GitHub - CORS](https://github.com/expressjs/cors)
+- **marked**: A library for converting Markdown to HTML, licensed under the **MIT License**. [GitHub - Marked](https://github.com/markedjs/marked)
+- **express-rate-limit**: A middleware for rate-limiting requests, licensed under the **MIT License**. [GitHub - express-rate-limit](https://github.com/nfriedly/express-rate-limit)
+- **cluster**: A built-in Node.js module for managing multiple server processes, licensed under the **MIT License**. [Node.js - Cluster](https://nodejs.org/api/cluster.html)
+- **os**: A built-in Node.js module for operating system-related utility methods, licensed under the **MIT License**. [Node.js - OS](https://nodejs.org/api/os.html)
+- **ioredis**: A library for interacting with Redis, licensed under the **MIT License**. [GitHub - ioredis](https://github.com/luin/ioredis)
+
 ## Features
 
 - **Copy code**: A "Copy" button is added to each code block, allowing users to easily copy code to the clipboard.
@@ -91,5 +102,5 @@ Before using the extension, make sure to start both the **Redis** server and you
 
 ## Troubleshooting
 
-- **If the code explanation is not working**: Make sure that both Radist and the server are running properly. Check the console for any error messages.
+- **If the code explanation is not working**: Make sure that both Redis and the server are running properly. Check the console for any error messages.
 - **If the copy functionality is not working**: Ensure the page contains `<pre>` elements with code and that the extension is enabled.

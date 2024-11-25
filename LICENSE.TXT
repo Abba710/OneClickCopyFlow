@@ -33,13 +33,13 @@ If you distribute the software or derivative works, you must pass on the same fr
 
   This extension uses the following third-party libraries, which are also licensed under the GPL-3.0 license:
 
-   - **GPT4js**: A library for interacting with the GPT-4 model. [GitHub - GPT4js](https://github.com/zachey01/gpt4free.js/)
-   - **express**: A web framework for Node.js. [GitHub - Express](https://github.com/expressjs/express)
-   - **cors**: A package for enabling Cross-Origin Resource Sharing. [GitHub - CORS](https://github.com/expressjs/cors)
-   - **marked**: A library for converting Markdown to HTML. [GitHub - Marked](https://github.com/markedjs/marked)
-   - **express-rate-limit**: A middleware for rate-limiting requests. [GitHub - express-rate-limit](https://github.com/nfriedly/express-rate-limit)
-   - **cluster**: A built-in Node.js module for managing multiple server processes. [Node.js - Cluster](https://nodejs.org/api/cluster.html)
-   - **os**: A built-in Node.js module for operating system-related utility methods. [Node.js - OS](https://nodejs.org/api/os.html)
-   - **ioredis**: A library for interacting with Redis. [GitHub - ioredis](https://github.com/luin/ioredis)
+   - GPT4js: A library for interacting with the GPT-4 model. [GitHub - GPT4js](https://github.com/zachey01/gpt4free.js/)
+   - express: A web framework for Node.js. [GitHub - Express](https://github.com/expressjs/express)
+   - cors: A package for enabling Cross-Origin Resource Sharing. [GitHub - CORS](https://github.com/expressjs/cors)
+   - marked: A library for converting Markdown to HTML. [GitHub - Marked](https://github.com/markedjs/marked)
+   - express-rate-limit: A middleware for rate-limiting requests. [GitHub - express-rate-limit](https://github.com/nfriedly/express-rate-limit)
+   - cluster: A built-in Node.js module for managing multiple server processes. [Node.js - Cluster](https://nodejs.org/api/cluster.html)
+   - os: A built-in Node.js module for operating system-related utility methods. [Node.js - OS](https://nodejs.org/api/os.html)
+   - ioredis: A library for interacting with Redis. [GitHub - ioredis](https://github.com/luin/ioredis)
 
 These libraries are distributed under the same GPL-3.0 license as this extension. Please refer to the documentation of each library for full licensing information.

@@ -30,28 +30,28 @@ You can find the video here: [Video URL](https://www.youtube.com/watch?v=OWdHDGg
 
 ## Required Dependencies
 
-This extension works with a **Radist** server that is required to process code explanations. **Radist** is used to interpret and explain the code sent by the extension.
+This extension works with a **Redis** server that is required to process code explanations. **Redis** is used to store and manage data for the extension.
 
-### Running Radist and the Server
+### Running Redis and the Server
 
-Before using the extension, make sure to start both the **Radist** server and your **code explanation server**. Here's how to do it:
+Before using the extension, make sure to start both the **Redis** server and your **code explanation server**. Here's how to do it:
 
-1. **Install Radist**:
+1. **Install Redis**:
 
-   - Download Radist and follow its installation instructions from the [Radist repository](https://github.com/your-repo/radist) (replace with actual link if available).
+   - Download Redis and follow its installation instructions from the official [Redis website](https://redis.io/download).
 
-2. **Start Radist**:
+2. **Start Redis**:
 
-   - Launch Radist by running the following command:
+   - Launch Redis by running the following command:
      ```bash
-     radist start
+     redis-server
      ```
 
 3. **Start the Explanation Server**:
 
    - Ensure that the server used for code explanation is up and running. You can start the local server by executing:
      ```bash
-     npm run start
+     node server.js
      ```
 
 4. **Verify the Setup**:

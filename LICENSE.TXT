@@ -1,0 +1,45 @@
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2024 [Abba710]
+Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
+
+0. Definitions.
+
+  "This License" refers to version 3 of the GNU General Public License.
+
+  "Copyright holder" means the individual or entity that holds the copyright for the covered work.
+
+  "You" means the licensee, the individual or entity exercising the rights granted by this License.
+
+  "Source code" means the preferred form of the work for making modifications to it.
+
+  "Object code" means any non-source form of a work.
+
+1. You may copy, distribute, and modify the software, as long as you meet the following conditions:
+
+  - You must provide access to the source code, and distribute the software under the same GPL-3.0 license when distributing copies or modified versions.
+  - You must also pass on the same freedoms to others by ensuring that the software remains licensed under the GPL-3.0, including all modifications and derivative works.
+
+2. Copyleft:
+If you distribute the software or derivative works, you must pass on the same freedoms to others by distributing the source code and your modifications under the GPL-3.0 license.
+
+3. The software is provided "as is", without any warranties or conditions. For more details, see the full text of the GPL-3.0 license.
+
+  Full text of the GPL-3.0 license can be found at:  
+  https://www.gnu.org/licenses/gpl-3.0.html
+
+4. Third-Party Libraries:
+
+  This extension uses the following third-party libraries, which are also licensed under the GPL-3.0 license:
+
+   - **GPT4js**: A library for interacting with the GPT-4 model. [GitHub - GPT4js](https://github.com/zachey01/gpt4free.js/)
+   - **express**: A web framework for Node.js. [GitHub - Express](https://github.com/expressjs/express)
+   - **cors**: A package for enabling Cross-Origin Resource Sharing. [GitHub - CORS](https://github.com/expressjs/cors)
+   - **marked**: A library for converting Markdown to HTML. [GitHub - Marked](https://github.com/markedjs/marked)
+   - **express-rate-limit**: A middleware for rate-limiting requests. [GitHub - express-rate-limit](https://github.com/nfriedly/express-rate-limit)
+   - **cluster**: A built-in Node.js module for managing multiple server processes. [Node.js - Cluster](https://nodejs.org/api/cluster.html)
+   - **os**: A built-in Node.js module for operating system-related utility methods. [Node.js - OS](https://nodejs.org/api/os.html)
+   - **ioredis**: A library for interacting with Redis. [GitHub - ioredis](https://github.com/luin/ioredis)
+
+These libraries are distributed under the same GPL-3.0 license as this extension. Please refer to the documentation of each library for full licensing information.

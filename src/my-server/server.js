@@ -9,7 +9,7 @@ import Redis from "ioredis"; // Importing Redis client for caching data.
 import axios from "axios";
 
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
 const redis = new Redis();
 
 const GPT4_PROVIDERS = [

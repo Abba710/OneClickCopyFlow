@@ -52,9 +52,7 @@ const preEls = document.querySelectorAll("pre"); // Find all <pre> elements in t
           notify(completion); // Show the completion notification
           button2.innerText = "Explained!"; // Update the button text to show completion
           button2.disabled = false; // Re-enable the button
-          button2.style.backgroundColor = "#00bb00"; // Change button color to indicate success
-          setTimeout(); // Potentially handle timing or UI update here
-        } else {
+          button2.style.backgroundColor = "#00bb00"; // Change button color to indicate success        } else {
           console.error("Error sending data to server: ", response.message); // Log any errors
         }
       }

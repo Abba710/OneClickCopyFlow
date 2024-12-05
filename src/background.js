@@ -40,7 +40,7 @@ async function getCurrentTabId() {
 async function sendCodeToServer(code, sendResponse) {
   try {
     // Send a POST request to the server with the code
-    const response = await fetch("http://localhost:3000/ai", {
+    const response = await fetch("http://localhost:5000/ai", {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // Set content type to JSON

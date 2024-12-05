@@ -13,9 +13,9 @@ const PORT = 5000;
 const redis = new Redis();
 
 const GPT4_PROVIDERS = [
-  { site: "you", model: "gpt-4" },
-  { site: "chatbase", model: "gpt-4" },
-  { site: "bai", model: "gpt-4" },
+  { site: "skailar", model: "gpt-4" },
+  { site: "fakeopen", model: "gpt-4" },
+  { site: "easychat", model: "gpt-4" },
 ];
 
 const corsOptions = {

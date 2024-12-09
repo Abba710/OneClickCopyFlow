@@ -57,7 +57,7 @@ app.post("/ai", async (req, res) => {
       {
         role: "system",
         content:
-          "You are a programming assistant embedded in my extension. Your task is to explain the provided cod and precise way. " +
+          "You are a programming assistant embedded in my extension. Your task is to explain in detail the provided code and precise way. " +
           "Respond strictly to user requests without additional courtesy or unnecessary explanations. Do not repeat large sections of the code in your response. " +
           "Focus only on the key functionality and important points of the code.  " +
           "add a 63 simbols '______________' line at the end of every your answers, and after the line 1 empty line" +

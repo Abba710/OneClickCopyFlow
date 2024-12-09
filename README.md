@@ -1,106 +1,136 @@
-# Code Explanation and Copying Extension
+# OneClickCopyFlow
 
-This browser extension allows users to interact with code on the website https://stackoverflow.com/. It provides the following features:
-
-- Copy individual code blocks to the clipboard.
-- Explain code blocks by sending them to a server for processing and displaying the explanation.
-- Copy all code on the page with a single keyboard shortcut ("alt+shift+c").
-- Notifications to inform users about the progress of processes (e.g., code copying or processing).
-
-## Acknowledgments
-
-This project was inspired by a YouTube video explaining [brief description of the video]. A big thanks to the creators for their valuable insights!
-
-You can find the video here: [Video URL](https://www.youtube.com/watch?v=OWdHDGgt0zo)
-
-Additionally, I would like to acknowledge the following libraries and authors for their contributions:
-
-- **GPT4js**: A library for interacting with the GPT-4 model, licensed under the **GNU General Public License**. [GitHub - GPT4js](https://github.com/zachey01/gpt4free.js/)
-- **express**: A web framework for Node.js, licensed under the **MIT License**. [GitHub - Express](https://github.com/expressjs/express)
-- **cors**: A package for enabling Cross-Origin Resource Sharing, licensed under the **MIT License**. [GitHub - CORS](https://github.com/expressjs/cors)
-- **marked**: A library for converting Markdown to HTML, licensed under the **MIT License**. [GitHub - Marked](https://github.com/markedjs/marked)
-- **express-rate-limit**: A middleware for rate-limiting requests, licensed under the **MIT License**. [GitHub - express-rate-limit](https://github.com/nfriedly/express-rate-limit)
-- **cluster**: A built-in Node.js module for managing multiple server processes, licensed under the **MIT License**. [Node.js - Cluster](https://nodejs.org/api/cluster.html)
-- **os**: A built-in Node.js module for operating system-related utility methods, licensed under the **MIT License**. [Node.js - OS](https://nodejs.org/api/os.html)
-- **ioredis**: A library for interacting with Redis, licensed under the **MIT License**. [GitHub - ioredis](https://github.com/luin/ioredis)
+## Overview
+OneClickCopyFlow is a Chrome extension that enhances code interaction on Stack Overflow by providing seamless code copying and AI-powered explanation features. The project consists of two main components:
+1. A Chrome extension for frontend interaction
+2. A Node.js server that processes code explanations using AI
 
 ## Features
 
-- **Copy code**: A "Copy" button is added to each code block, allowing users to easily copy code to the clipboard.
-- **Explain code**: A "Explain" button is added to each code block, which sends the code to the server for processing. The server's response is displayed on the button, and a notification is shown.
-- **Copy all**: A command listener allows the user to copy all the code on the page at once.
-- **Shadow DOM**: The extension uses the Shadow DOM to isolate the styles and functionality of each code block, so they do not interfere with the rest of the page.
+### Extension Features
+- **Smart Code Copying**: Copy individual code blocks with a single click
+- **Bulk Copy**: Copy all code blocks on the page using "alt+shift+c" shortcut
+- **AI-Powered Explanations**: Get instant explanations for any code block
+- **Clean UI**: Uses Shadow DOM for isolated styling and seamless integration
+- **Progress Notifications**: Real-time feedback for all operations
+
+### Server Features
+- **OpenAI Integration**: Leverages advanced AI models for code analysis
+- **Redis Caching**: Efficient response caching and rate limiting
+- **Clustered Processing**: Utilizes all CPU cores for better performance
+- **Secure Configuration**: Environment-based configuration management
 
 ## Installation
 
-1. Download or clone this repository.
-2. Open Chrome and go to `chrome://extensions/`.
-3. Enable **Developer Mode** in the top-right corner.
-4. Click **Load unpacked** and select the folder with the extension files.
-5. The extension is now installed and ready to use!
+### Extension Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/OneClickCopyFlow.git
+   cd OneClickCopyFlow
+   ```
 
-## Required Dependencies
+2. Load in Chrome:
+   - Open Chrome and navigate to `chrome://extensions/`
+   - Enable "Developer Mode"
+   - Click "Load unpacked" and select the extension directory
 
-This extension works with a **Redis** server that is required to process code explanations. **Redis** is used to store and manage data for the extension.
+### Server Setup
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-### Running Redis and the Server
+2. Configure environment:
+   Create `.env` file in the server directory:
+   ```plaintext
+   OPENAI_API_KEY=your_key_here
+   ```
 
-Before using the extension, make sure to start both the **Redis** server and your **code explanation server**. Here's how to do it:
+3. Install Redis:
+   - Download from [Redis website](https://redis.io/download)
+   - Follow installation instructions for your OS
 
-1. **Install Redis**:
+## Running the Application
 
-   - Download Redis and follow its installation instructions from the official [Redis website](https://redis.io/download).
+1. Start Redis:
+   ```bash
+   redis-server
+   ```
 
-2. **Start Redis**:
+2. Launch the server:
+   ```bash
+   npm start
+   ```
+   Server will be available at `http://localhost:3000`
 
-   - Launch Redis by running the following command:
-     ```bash
-     .\redis-server.exe
-     ```
+## Project Structure
 
-3. **Start the Explanation Server**:
+### Extension Files
+- `manifest.json`: Extension configuration
+- `content-script.js`: Main extension logic
+- `content-script.css`: Extension styling
+- `background.js`: Background processes
+- `notification/`: Notification components
 
-   - Ensure that the server used for code explanation is up and running. You can start the local server by executing:
-     ```bash
-     node server.js
-     ```
+### Server Files
+- `src/my-server/`
+  - `server.js`: Main server application
+  - `.env`: Environment configuration
+  - `.env.sample`: Configuration template
 
-4. **Verify the Setup**:
-   - Once both services are running, the extension should be able to communicate with them for processing and explaining the code.
+## Technical Implementation
 
-## How It Works
+### AI Integration
+```javascript
+import OpenAI from "openai";
+import dotenv from "dotenv";
 
-### Interacting with Code
+dotenv.config();
 
-- When the page loads, the extension looks for all `<pre>` elements containing code.
-- For each code block, a Shadow DOM is created, and two buttons are added: "Copy" and "Explain".
-- The **Copy** button copies the code from the `<code>` tag to the clipboard.
-- The **Explain** button sends the code to the server for processing and displays a notification once the explanation is ready.
+const client = new OpenAI({
+  baseURL: "https://api.zukijourney.com/v1",
+  apiKey: process.env.OPENAI_API_KEY,
+});
+```
 
-### Copy All Code
+### Extension Architecture
+- Uses Shadow DOM for isolated styling
+- Implements custom event listeners for code block interaction
+- Manages state through background processes
 
-- The extension listens for the user command (`copy-all`), which copies the content of all code blocks on the page to the clipboard.
+## Dependencies
 
-### Notifications
+### Core Libraries
+- **OpenAI API**: AI-powered code analysis
+- **Express**: Web server framework
+- **Redis**: Caching and rate limiting
+- **CORS**: Cross-origin resource sharing
 
-- Notifications are shown during the following processes:
-  - **Copying code**: When the code is copied to the clipboard.
-  - **Explaining code**: When the code is sent to the server for processing and when the explanation is returned.
+### Development Tools
+- **dotenv**: Environment management
+- **express-rate-limit**: Request limiting
+- **marked**: Markdown processing
+- **cluster**: Process management
 
-## File Structure
+## Acknowledgments
 
-- `content-script.js`: The main script that handles interactions with the code blocks, including copying and explaining the code.
-- `content-script.css`: Styles used for formatting elements inside the Shadow DOM.
-- `notification/`: Folder containing notifications (e.g., `execute.js`, `began.js`, `completion.js`).
-- `manifest.json`: Configuration file for the extension, including permissions and commands.
-
-## Usage
-
-- **Copy code**: Click the "Copy" button next to any code block.
-- **Explain code**: Click the "Explain" button next to any code block to send it to the server for processing.
-- **Copy all**: Use the registered keyboard shortcut (defined in the manifest) to copy all code on the page.
+This project utilizes several open-source libraries and tools:
+- **AI API**: [GitHub - cool-ai-stuff](https://github.com/zukixa/cool-ai-stuff/)
+- **Express**: [GitHub - Express](https://github.com/expressjs/express)
+- **CORS**: [GitHub - CORS](https://github.com/expressjs/cors)
+- **Redis**: [GitHub - ioredis](https://github.com/luin/ioredis)
 
 ## Troubleshooting
 
-- **If the code explanation is not working**: Make sure that both Redis and the server are running properly. Check the console for any error messages.
-- **If the copy functionality is not working**: Ensure the page contains `<pre>` elements with code and that the extension is enabled.
+### Common Issues
+- **Extension Not Working**: Verify Chrome extension is enabled and permissions are granted
+- **Server Connection Failed**: Check if Redis and Node.js server are running
+- **API Limits**: If you hit rate limits, wait or upgrade your API plan
+
+### Server Issues
+- Ensure Redis is running and accessible
+- Verify environment variables are correctly set
+- Check console for detailed error messages
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.

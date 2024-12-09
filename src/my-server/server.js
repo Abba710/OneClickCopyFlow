@@ -57,15 +57,15 @@ app.post("/ai", async (req, res) => {
       {
         role: "system",
         content:
-          "You are a programming assistant embedded in my extension. Your task is to explain in detail the provided code and precise way. " +
-          "Respond strictly to user requests without additional courtesy or unnecessary explanations. Do not repeat large sections of the code in your response. " +
-          "Focus only on the key functionality and important points of the code.  " +
-          "add a 63 simbols '______________' line at the end of every your answers, and after the line 1 empty line" +
-          "do not write anything unnecessary other than explanations for the code",
+          "Вы являетесь встроенным в моё расширение помощником по программированию. Ваша задача — подробно и точно объяснять предоставленный код. " +
+          "Отвечайте строго на запросы пользователя без дополнительных вежливостей или ненужных пояснений. Не повторяйте большие участки кода в ответах. " +
+          "Сосредоточьтесь только на ключевой функциональности и важных аспектах кода. " +
+          "Добавляйте строку из 63 символов '______________' в конце каждого ответа, а после неё оставляйте 1 пустую строку. " +
+          "Не пишите ничего лишнего, кроме объяснений кода.",
       },
       {
         role: "user",
-        content: `In each of your answers, strictly follow the instructions, your task is to explain the code and nothing more!: ${text}`,
+        content: `В каждом из ваших ответов строго следуйте инструкциям. Ваша задача — объяснять код и ничего больше!: ${text}`,
       },
     ];
 

@@ -1,4 +1,3 @@
-import GPT4js from "gpt4js"; // Importing GPT4js for interacting with the GPT-4 model.
 import express, { json } from "express"; // Importing Express.js for building the web server and JSON middleware.
 import cors from "cors"; // Importing CORS middleware to handle Cross-Origin Resource Sharing.
 import { marked } from "marked"; // Importing 'marked' to convert Markdown responses to HTML.
@@ -6,10 +5,17 @@ import rateLimit from "express-rate-limit"; // Importing rate limiter to control
 import cluster from "cluster"; // Importing the Cluster module for multi-core server management.
 import os from "os"; // Importing the OS module to retrieve CPU information.
 import Redis from "ioredis"; // Importing Redis client for caching data.
+import OpenAI from "openai"; // Importing the OpenAI API client.
+import dotenv from "dotenv"; // Importing dotenv for loading environment variables from a .env file.
+dotenv.config(); // Loading environment variables from the .env file.
 
 const app = express(); // Creating an Express application instance.
 const PORT = 3000; // Defining the port number for the server.
 const redis = new Redis(); // Initializing a connection to the Redis database.
+const client = new OpenAI({
+  baseURL: "https://api.zukijourney.com/v1",
+  apiKey: process.env.OPENAI_API_KEY,
+}); // Initializing the OpenAI API client.
 
 const corsOptions = {
   origin: "chrome-extension://bpbfekccemffnhfbmglomkggpenchnom", // Allowing requests only from the specified Chrome extension.
@@ -41,10 +47,9 @@ app.post("/ai", async (req, res) => {
 
     const text = code.text; // Extracting the text from the code object.
     const options = {
-      provider: "Nextway", // Using the "Nextway" provider for GPT4js.
-      model: "gpt-4o-free", // Specifying the model to use.
-      codeModelMode: true, // Enabling code-specific mode for GPT.
-      temperature: 1, // Setting the randomness of the model's responses.
+      gpt4oMini: "gpt-4o-mini", // Specifying the model to use.
+      gpt4: "gpt-4",
+      gpt4o: "gpt-4o",
     };
 
     // Preparing the messages for GPT interaction
@@ -52,7 +57,7 @@ app.post("/ai", async (req, res) => {
       {
         role: "system",
         content:
-          "You are a programming assistant embedded in my extension. Your task is to explain the provided code in a short, simple, and precise way. " +
+          "You are a programming assistant embedded in my extension. Your task is to explain the provided cod and precise way. " +
           "Respond strictly to user requests without additional courtesy or unnecessary explanations. Do not repeat large sections of the code in your response. " +
           "Focus only on the key functionality and important points of the code.  " +
           "add a 63 simbols '______________' line at the end of every your answers, and after the line 1 empty line" +
@@ -64,15 +69,22 @@ app.post("/ai", async (req, res) => {
       },
     ];
 
-    const provider = GPT4js.createProvider(options.provider); // Initializing the provider for GPT4js.
-
     // Sending a request to GPT with the messages and options
-    const responseText = await provider.chatCompletion(messages, options);
+    const responseText = await client.chat.completions.create({
+      model: options.gpt4oMini,
+      messages,
+      temperature: 1,
+    });
+    console.log(responseText);
 
-    const markedHTML = marked(responseText || "Try again"); // Converting the response from Markdown to HTML.
+    const markedHTML = marked(
+      responseText.choices[0].message.content || "Try again"
+    ); // Converting the response from Markdown to HTML.
 
     // Caching the response in Redis with a 1-hour expiration time
-    await redis.set(cacheKey, markedHTML, "EX", 60 * 60);
+    if (responseText !== undefined) {
+      await redis.set(cacheKey, markedHTML, "EX", 60 * 60);
+    }
 
     // Sending the processed response back to the client
     res.json({ html: markedHTML });

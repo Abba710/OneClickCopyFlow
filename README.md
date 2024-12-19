@@ -50,9 +50,9 @@ OneClickCopyFlow is a Chrome extension that enhances code interaction on Stack O
 
 2. Configure environment:
    Create `.env` file in the server directory:
-
+   U can get free api key from [here](https://docs.zukijourney.com/ai#quick-start)
    ```plaintext
-   OPENAI_API_KEY=your_key_here
+   OPENAI_API_KEY=your_key_here 
    ```
 
 3. Install Redis:

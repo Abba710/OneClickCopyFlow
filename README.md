@@ -64,12 +64,13 @@ OneClickCopyFlow is a Chrome extension that enhances code interaction on Stack O
 1. Start Redis:
 
    ```bash
-   redis-server
+   cd "redis path"
+   .\redis-server
    ```
 
 2. Launch the server:
    ```bash
-   npm start
+   node server.js
    ```
    Server will be available at `http://localhost:3000`
 
